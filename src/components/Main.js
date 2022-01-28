@@ -1,16 +1,26 @@
 import React, {useState, useEffect} from "react";
 import api from "../utils/api";
+import Card from "./Card";
 
-function Main({onEditAvatar, onEditProfile, onAddPlace}) {
-  const [userName, setUserName] = useState([]);
-  const [userDescription, setUserDescription] = useState([]);
-  const [userAvatar, setUserAvatar] = useState([]);
+function Main({onEditAvatar, onEditProfile, onAddPlace, onCardClick}) {
+  const [userName, setUserName] = useState('');
+  const [userDescription, setUserDescription] = useState('');
+  const [userAvatar, setUserAvatar] = useState('');
+
+  const [cards, setCards] = useState([]);
 
   useEffect(() => {
     api.getUser().then((data) => {
       setUserName(data);
       setUserDescription(data);
       setUserAvatar(data);
+    })
+    .catch((err) => alert(err))
+  }, [])
+
+  useEffect(() => {
+    api.getCards().then((data) => {
+      setCards(data)
     })
     .catch((err) => alert(err))
   }, [])
@@ -50,6 +60,14 @@ function Main({onEditAvatar, onEditProfile, onAddPlace}) {
 
       <section className="elements content__elements">
         <ul className="card-list-section">
+          {
+            cards.map((card) => 
+            <Card 
+              key = {card._id}
+              card = {card}
+              onCardClick = {onCardClick}
+            />)
+          }
         </ul>
       </section>
     </main>
