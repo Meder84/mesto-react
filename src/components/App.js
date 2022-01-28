@@ -42,7 +42,7 @@ function App() {
         <PopupWithForm
           name='popup_type_edit'
           title='Редактировать профиль'
-          buttonText='Сохранить Test'
+          buttonText='Сохранить'
           isOpen = {isEditProfilePopupOpen}
           onClose = {closeAllPopups}
         >
