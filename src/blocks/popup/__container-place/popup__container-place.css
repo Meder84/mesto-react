@@ -1,0 +1,8 @@
+.popup__container-place {
+  margin: 0 auto;
+  width: 75vw;
+  height: 75vh;
+  max-width: 816px;
+  position: relative;
+  box-sizing: border-box;
+}
