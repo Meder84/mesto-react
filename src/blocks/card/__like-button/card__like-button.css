@@ -9,4 +9,6 @@
   min-height: 19px;
   border-style: none;
   align-self: center;
+  cursor: pointer;
+  transition: 0.3s;
 }

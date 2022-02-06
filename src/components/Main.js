@@ -1,22 +1,12 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import api from "../utils/api";
 import Card from "./Card";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function Main({onEditAvatar, onEditProfile, onAddPlace, onCardClick}) {
-  const [userName, setUserName] = useState('');
-  const [userDescription, setUserDescription] = useState('');
-  const [userAvatar, setUserAvatar] = useState('');
+  const currentUser = useContext(CurrentUserContext);
 
   const [cards, setCards] = useState([]);
-
-  useEffect(() => {
-    api.getUser().then((data) => {
-      setUserName(data);
-      setUserDescription(data);
-      setUserAvatar(data);
-    })
-    .catch((err) => alert(err))
-  }, [])
 
   useEffect(() => {
     api.getCards().then((data) => {
@@ -36,19 +26,19 @@ function Main({onEditAvatar, onEditProfile, onAddPlace, onCardClick}) {
         </button>
         <img 
           className="profile__avatar" 
-          src={userAvatar.avatar} 
+          src={currentUser.avatar} 
           alt="аватар." 
         />
         
         <div className="profile__info">
-          <h1 className="profile__name">{userName.name}</h1>
+          <h1 className="profile__name">{currentUser.name}</h1>
           <button 
             className="profile__edit-button opacity" 
             type="button"
             onClick={onEditProfile}
           >
           </button>
-          <p className="profile__job">{userDescription.about}</p>
+          <p className="profile__job">{currentUser.about}</p>
         </div>
         <button 
           className="profile__add-button opacity" 
