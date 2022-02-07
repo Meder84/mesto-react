@@ -7,6 +7,7 @@ import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import api from '../utils/api';
+import EditProfilePopup from './EditProfilePopup';
 
 function App() {
   const [isEditProfilePopupOpen, setisEditProfilePopupOpen] = useState(false);
@@ -51,7 +52,7 @@ function App() {
       <div className="body body_theme_dark">
         <div className="page">
           <Switch>
-            <Route exact path='/main'>
+            <Route exact path='/'>
               <Header />
               <Main
                 onEditProfile = {handleEditProfileClick}
@@ -63,42 +64,10 @@ function App() {
             </Route>
           </Switch>
 
-          <PopupWithForm
-            name='popup_type_edit'
-            title='Редактировать профиль'
-            buttonText='Сохранить'
-            isOpen = {isEditProfilePopupOpen}
-            onClose = {closeAllPopups}
-          >
-            <input
-              className="popup__input popup__input_name" 
-              type="text" 
-              id="name-input" 
-              name="name"
-              required
-              minLength="2"
-              maxLength="40"
-              autoComplete="off" 
-              placeholder="Имя" />
-            <span 
-              className="error" 
-              id="name-input-error">
-            </span>
-            <input
-              className="popup__input popup__input_job" 
-              type="text" 
-              id="job-input"
-              name="about" 
-              required
-              minLength="2"
-              maxLength="200"
-              autoComplete="off" 
-              placeholder="Профессия" />
-            <span 
-              className="error" 
-              id="job-input-error">
-            </span>
-          </PopupWithForm>
+          <EditProfilePopup 
+            isOpen={isEditProfilePopupOpen} 
+            onClose={closeAllPopups} 
+          />
             
           <PopupWithForm
             name='popup_type_add'

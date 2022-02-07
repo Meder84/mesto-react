@@ -57,21 +57,21 @@ class Api {
     .then(this._errorHandler);
   }
 
-  setLikeHandler(id) {
+  changeLikeCardStatus(id, condition) {
     return fetch( this._url + 'cards/likes/' + id, {
-      method: 'PUT',
+      method: condition ? 'PUT' : 'DELETE',
       headers: this._headers
     })
     .then(this._errorHandler);
   }
 
-  deleteLikeHandler(id) {
-    return fetch( this._url + 'cards/likes/' + id, {
-      method: 'DELETE',
-      headers: this._headers
-    })
-    .then(this._errorHandler);
-  }
+  // deleteLikeHandler(id) {
+  //   return fetch( this._url + 'cards/likes/' + id, {
+  //     method: 'DELETE',
+  //     headers: this._headers
+  //   })
+  //   .then(this._errorHandler);
+  // }
 
  
   userAvatarUpdate(data) {
