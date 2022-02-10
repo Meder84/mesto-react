@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { Route, Switch } from 'react-router-dom';
+// import { Route, Switch } from 'react-router-dom';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
@@ -8,17 +8,18 @@ import ImagePopup from './ImagePopup';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import api from '../utils/api';
 import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
 
 function App() {
   const [isEditProfilePopupOpen, setisEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setisAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setisEditAvatarPopupOpen] = useState(false);
   const [selectedCard, setselectedCard] = useState({name: '', link: ''});
-  const [currentUser, setcurrentUser] = useState({});
+  const [currentUser, setCurrentUser] = useState({});
 
   useEffect(() => {
     api.getUser().then((data) => {
-      setcurrentUser(data);
+      setCurrentUser(data);
     })
     //.catch((err) => alert(err))
   }, [])
@@ -40,6 +41,14 @@ function App() {
     setselectedCard(card)
   }
 
+  function handleUpdateUser(data) {
+    api.setUser(data).then((data) => {
+      setCurrentUser(data)
+      closeAllPopups()
+    })
+    //.catch((err) => alert(err))
+  }
+
   function closeAllPopups() {
     setisEditProfilePopupOpen(false);
     setisAddPlacePopupOpen(false);
@@ -51,21 +60,23 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="body body_theme_dark">
         <div className="page">
-          <Switch>
-            <Route exact path='/'>
-              <Header />
-              <Main
-                onEditProfile = {handleEditProfileClick}
-                onAddPlace = {handleAddPlaceClick}
-                onEditAvatar = {handleEditAvatarClick}
-                onCardClick = {handleCardClick}
-              />
-              <Footer />
-            </Route>
-          </Switch>
+          <Header />
+          <Main
+            onEditProfile = {handleEditProfileClick}
+            onAddPlace = {handleAddPlaceClick}
+            onEditAvatar = {handleEditAvatarClick}
+            onCardClick = {handleCardClick}
+          />
+          <Footer />
 
           <EditProfilePopup 
             isOpen={isEditProfilePopupOpen} 
+            onClose={closeAllPopups} 
+            onUpdateUser={handleUpdateUser}            
+          />
+
+          <EditAvatarPopup 
+            isOpen={isEditAvatarPopupOpen} 
             onClose={closeAllPopups} 
           />
             
@@ -101,27 +112,6 @@ function App() {
             <span 
               className="error" 
               id="url-input-error">
-            </span>
-          </PopupWithForm>
-
-          <PopupWithForm
-            name='popup_type_avatar'
-            title='Обновить аватар'
-            buttonText='Сохранить'
-            isOpen = {isEditAvatarPopupOpen}
-            onClose = {closeAllPopups}
-          >
-            <input
-              className="popup__input popup__input_url" 
-              type="url" 
-              name="avatar"
-              id="avatar-input" 
-              required
-              autoComplete="off" 
-              placeholder="Ссылка на картинку" />
-            <span 
-              className="error" 
-              id="avatar-input-error">
             </span>
           </PopupWithForm>
 

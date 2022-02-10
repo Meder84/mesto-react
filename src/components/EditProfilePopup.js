@@ -1,7 +1,37 @@
-import React from "react";
+import React, {useState, useEffect, useContext} from "react";
 import PopupWithForm from "./PopupWithForm";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function EditProfilePopup(props) {
+  const currentUser = useContext(CurrentUserContext)
+
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+
+  useEffect(() => {
+    setName(currentUser.name);
+    setDescription(currentUser.about);
+  }, [currentUser])
+
+  function handleChangeName(evt) {
+    setName(evt.target.value);
+  }
+
+  function handleChangeAbout(evt) {
+    setDescription(evt.target.value);
+  }
+
+  function handleSubmit(evt) {
+    // Запрещаем браузеру переходить по адресу формы
+    evt.preventDefault();
+
+    // Передаём значения управляемых компонентов во внешний обработчик
+    props.onUpdateUser({
+      name: name,
+      about: description,
+    });
+  }
+
   return(
     <PopupWithForm
       name='popup_type_edit'
@@ -9,6 +39,7 @@ function EditProfilePopup(props) {
       buttonText='Сохранить'
       isOpen={props.isOpen}
       onClose={props.onClose}
+      onSubmit={handleSubmit}
     >
       <input
         className="popup__input popup__input_name" 
@@ -19,7 +50,10 @@ function EditProfilePopup(props) {
         minLength="2"
         maxLength="40"
         autoComplete="off" 
-        placeholder="Имя" />
+        placeholder="Имя" 
+        onChange={handleChangeName}
+        value={name || ''}
+      />
       <span 
         className="error" 
         id="name-input-error">
@@ -28,12 +62,15 @@ function EditProfilePopup(props) {
         className="popup__input popup__input_job" 
         type="text" 
         id="job-input"
-        name="about" 
+        name="about"
         required
         minLength="2"
         maxLength="200"
         autoComplete="off" 
-        placeholder="Профессия" />
+        placeholder="Профессия" 
+        onChange={handleChangeAbout}
+        value={description || ''}
+      />
       <span 
         className="error" 
         id="job-input-error">

@@ -35,7 +35,7 @@ function Card(props) {
   return(
     <article className="card">
       <button 
-        className={cardDeleteButtonClassName}
+        className={`opacity ${cardDeleteButtonClassName}`}
         type="button"
         onClick={handleDeleteClick}
       >
@@ -50,7 +50,7 @@ function Card(props) {
         <h2 className="card__title">{props.card.name}</h2>
         <div className="card__like-elements">
           <button 
-            className={cardLikeButtonClassName}
+            className={`opacity ${cardLikeButtonClassName}`}
             type="button"
             onClick={handleLikeClick}
           >
