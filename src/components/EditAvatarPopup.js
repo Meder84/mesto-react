@@ -1,9 +1,18 @@
-import React from "react";
+import React, {useRef} from "react";
 import PopupWithForm from "./PopupWithForm";
 
 function EditAvatarPopup(props) {
 
- 
+ const refAvatar= useRef('');
+
+ function handleSubmit(evt) {
+   evt.preventDefault();
+
+   props.onUpdateAvatar({
+    avatar: refAvatar.current.value,
+   });
+   refAvatar.current.value = '';
+ }
 
   return(
     <PopupWithForm
@@ -12,7 +21,7 @@ function EditAvatarPopup(props) {
       buttonText='Сохранить'
       isOpen = {props.isOpen}
       onClose = {props.onClose}
-      // onSubmit = {handleSubmit}
+      onSubmit = {handleSubmit}
     >
       <input
         className="popup__input popup__input_url" 
@@ -21,7 +30,9 @@ function EditAvatarPopup(props) {
         id="avatar-input" 
         required
         autoComplete="off" 
-        placeholder="Ссылка на картинку" />
+        placeholder="Ссылка на картинку" 
+        ref={refAvatar}
+      />
       <span 
         className="error" 
         id="avatar-input-error">

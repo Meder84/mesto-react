@@ -22,10 +22,8 @@ function EditProfilePopup(props) {
   }
 
   function handleSubmit(evt) {
-    // Запрещаем браузеру переходить по адресу формы
     evt.preventDefault();
 
-    // Передаём значения управляемых компонентов во внешний обработчик
     props.onUpdateUser({
       name: name,
       about: description,

@@ -64,15 +64,6 @@ class Api {
     })
     .then(this._errorHandler);
   }
-
-  // deleteLikeHandler(id) {
-  //   return fetch( this._url + 'cards/likes/' + id, {
-  //     method: 'DELETE',
-  //     headers: this._headers
-  //   })
-  //   .then(this._errorHandler);
-  // }
-
  
   userAvatarUpdate(data) {
     return fetch( this._url + 'users/me/avatar', {
