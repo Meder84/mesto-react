@@ -6,6 +6,10 @@ function AddPlacePopup(props) {
   const [name, setName] = useState('')
   const [link, setLink] = useState('')
 
+useEffect(() => {
+  setName('');
+  setLink('');
+}, [props.isOpen]);
 
 function handleChangeName(evt) {
   setName(evt.target.value)
@@ -43,6 +47,7 @@ function handleSubmit(evt) {
         autoComplete="off" 
         placeholder="Название" 
         onChange={handleChangeName}
+        value={name || ''}
       />
       <span 
         className="error" 
@@ -57,6 +62,7 @@ function handleSubmit(evt) {
         autoComplete="off" 
         placeholder="Ссылка на картинку" 
         onChange={handleChangeInfo}
+        value={link || ''}
       />
       <span 
         className="error" 
