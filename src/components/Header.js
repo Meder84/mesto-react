@@ -8,7 +8,7 @@ function Header() {
         <img 
           className="logo header__logo opacity" 
           src={logo}
-          alt="Текст Mesto. test" />
+          alt="Текст Mesto." />
       </a>
     </header>
   )
